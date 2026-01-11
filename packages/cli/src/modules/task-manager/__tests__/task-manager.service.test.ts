@@ -1,5 +1,5 @@
-import { testDb, testModules } from '@n8n/backend-test-utils';
 import { mock } from 'jest-mock-extended';
+import type { Logger } from '@n8n/backend-common';
 
 import type { TaskManagerRepository } from '../task-manager.repository';
 import { TaskManagerService } from '../task-manager.service';
@@ -10,6 +10,7 @@ describe('TaskManagerService', () => {
 	let service: TaskManagerService;
 	let mockRepository: jest.Mocked<TaskManagerRepository>;
 	let mockConfig: TaskManagerConfig;
+	let mockLogger: jest.Mocked<Logger>;
 
 	beforeEach(() => {
 		mockRepository = mock<TaskManagerRepository>();
@@ -17,15 +18,15 @@ describe('TaskManagerService', () => {
 		mockConfig.checkInterval = 15;
 		mockConfig.maxPageSize = 50;
 
-		service = new TaskManagerService(
-			mockRepository,
-			mock(),
-			mockConfig,
-		);
+		// Mock logger with scoped method
+		mockLogger = mock<Logger>();
+		mockLogger.scoped.mockReturnValue(mockLogger);
+
+		service = new TaskManagerService(mockRepository, mockLogger, mockConfig);
 	});
 
-	afterEach(() => {
-		service.shutdown();
+	afterEach(async () => {
+		await service.shutdown();
 	});
 
 	describe('createTask', () => {
@@ -168,11 +169,7 @@ describe('TaskManagerService', () => {
 
 			const result = await service.getTasks({ status: 'pending' }, 0, 10);
 
-			expect(mockRepository.findWithFilters).toHaveBeenCalledWith(
-				{ status: 'pending' },
-				0,
-				10,
-			);
+			expect(mockRepository.findWithFilters).toHaveBeenCalledWith({ status: 'pending' }, 0, 10);
 			expect(result).toHaveLength(2);
 		});
 
