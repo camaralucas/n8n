@@ -82,6 +82,10 @@ export { TransferFolderBodyDto } from './folders/transfer-folder.dto';
 export { ListInsightsWorkflowQueryDto } from './insights/list-workflow-query.dto';
 export { InsightsDateFilterDto } from './insights/date-filter.dto';
 
+export { CreateTaskDto } from './task-manager/create-task.dto';
+export { UpdateTaskDto } from './task-manager/update-task.dto';
+export { ListTasksQueryDto } from './task-manager/list-tasks-query.dto';
+
 export { PaginationDto } from './pagination/pagination.dto';
 export {
 	UsersListFilterDto,

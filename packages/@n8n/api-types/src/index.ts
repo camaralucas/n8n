@@ -92,6 +92,17 @@ export {
 } from './schemas/source-controlled-file.schema';
 
 export {
+	type TaskStatus,
+	type TaskPriority,
+	type Task,
+	type TaskSummary,
+	taskStatusSchema,
+	taskPrioritySchema,
+	taskSchema,
+	taskSummarySchema,
+} from './schemas/task-manager.schema';
+
+export {
 	type InsightsSummaryType,
 	type InsightsSummaryUnit,
 	type InsightsSummary,
