@@ -1,0 +1,112 @@
+{
+  "n8n_architecture": {
+    "type": "monorepo",
+    "package_manager": "pnpm",
+    "build_system": "turbo",
+    "languages": {
+      "primary": "TypeScript",
+      "frontend": "Vue 3",
+      "backend": "Node.js"
+    },
+    "key_packages": {
+      "@n8n/api-types": {
+        "purpose": "Shared TypeScript interfaces between frontend and backend",
+        "type": "types",
+        "dependencies": []
+      },
+      "packages/workflow": {
+        "purpose": "Core workflow interfaces and types",
+        "type": "core",
+        "dependencies": []
+      },
+      "packages/core": {
+        "purpose": "Workflow execution engine",
+        "type": "core",
+        "dependencies": ["packages/workflow"]
+      },
+      "packages/cli": {
+        "purpose": "Express server, REST API, and CLI commands",
+        "type": "backend",
+        "dependencies": ["packages/core", "packages/workflow", "@n8n/api-types"]
+      },
+      "packages/editor-ui": {
+        "purpose": "Vue 3 frontend application",
+        "type": "frontend",
+        "dependencies": ["@n8n/api-types", "@n8n/design-system", "@n8n/i18n"]
+      },
+      "packages/@n8n/i18n": {
+        "purpose": "Internationalization for UI text",
+        "type": "frontend-lib",
+        "dependencies": []
+      },
+      "packages/nodes-base": {
+        "purpose": "Built-in nodes for integrations",
+        "type": "nodes",
+        "dependencies": ["packages/workflow", "packages/core"]
+      },
+      "packages/@n8n/nodes-langchain": {
+        "purpose": "AI/LangChain nodes",
+        "type": "nodes",
+        "dependencies": ["packages/workflow", "packages/core"]
+      },
+      "@n8n/design-system": {
+        "purpose": "Vue component library for UI consistency",
+        "type": "frontend-lib",
+        "dependencies": []
+      },
+      "@n8n/config": {
+        "purpose": "Centralized configuration management",
+        "type": "config",
+        "dependencies": []
+      }
+    },
+    "architectural_patterns": {
+      "dependency_injection": {
+        "library": "@n8n/di",
+        "description": "IoC container for managing dependencies"
+      },
+      "mvc": {
+        "pattern": "Controller-Service-Repository",
+        "location": "packages/cli",
+        "description": "Backend follows MVC-like pattern"
+      },
+      "event_driven": {
+        "description": "Internal event bus for decoupled communication"
+      },
+      "context_based_execution": {
+        "description": "Different contexts for different node types"
+      },
+      "state_management": {
+        "library": "Pinia",
+        "location": "packages/editor-ui",
+        "description": "Frontend state management"
+      }
+    },
+    "tech_stack": {
+      "frontend": {
+        "framework": "Vue 3",
+        "language": "TypeScript",
+        "build_tool": "Vite",
+        "state": "Pinia",
+        "ui_library": "@n8n/design-system + Storybook"
+      },
+      "backend": {
+        "runtime": "Node.js",
+        "language": "TypeScript",
+        "framework": "Express",
+        "orm": "TypeORM",
+        "databases": ["SQLite", "PostgreSQL", "MySQL"]
+      },
+      "testing": {
+        "unit": "Jest (backend), Vitest (frontend)",
+        "e2e": "Playwright",
+        "mocking": "nock (server), jest-mock-extended"
+      },
+      "code_quality": {
+        "formatter": "Biome",
+        "linter": "ESLint",
+        "git_hooks": "lefthook"
+      }
+    }
+  }
+}

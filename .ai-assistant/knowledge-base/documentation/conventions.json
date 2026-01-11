@@ -1,0 +1,125 @@
+{
+  "n8n_conventions": {
+    "general": {
+      "package_manager": {
+        "tool": "pnpm",
+        "mandatory": true,
+        "never_use": ["npm", "yarn"]
+      },
+      "ticket_tracking": {
+        "system": "Linear",
+        "branch_naming": "Use name suggested by Linear",
+        "pr_reference": "Always link Linear ticket"
+      },
+      "feature_flags": {
+        "system": "Posthog"
+      },
+      "diagrams": {
+        "format": "Mermaid",
+        "location": "Markdown files"
+      }
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm build",
+        "important": "ALWAYS redirect output to file",
+        "correct_usage": "pnpm build > build.log 2>&1",
+        "check_errors": "tail -n 20 build.log"
+      },
+      "test": {
+        "all": "pnpm test",
+        "affected": "pnpm test:affected",
+        "specific": "cd to package dir, then pnpm test <file>",
+        "navigation": "Use pushd/popd, check with pwd"
+      },
+      "quality": {
+        "lint": {
+          "command": "pnpm lint",
+          "scope": "From specific package directory",
+          "fix": "pnpm lint:fix"
+        },
+        "typecheck": {
+          "command": "pnpm typecheck",
+          "when": "Before committing",
+          "important": "Build first if changing api-types or cross-package deps"
+        }
+      },
+      "development": {
+        "dev": "pnpm dev (full stack)",
+        "dev_backend": "pnpm dev:be",
+        "dev_frontend": "pnpm dev:fe",
+        "dev_ai": "pnpm dev:ai (for LangChain nodes)"
+      }
+    },
+    "typescript": {
+      "never": [
+        "any type - use proper types or unknown",
+        "type casting with 'as' - use type guards instead"
+      ],
+      "always": [
+        "Define shared interfaces in @n8n/api-types",
+        "Use proper type annotations",
+        "Prefer type guards over type assertions"
+      ]
+    },
+    "error_handling": {
+      "deprecated": "ApplicationError",
+      "use": [
+        "UnexpectedError - for unexpected runtime errors",
+        "OperationalError - for expected operational errors",
+        "UserError - for user-facing errors"
+      ],
+      "import_from": "Appropriate package error classes"
+    },
+    "frontend": {
+      "i18n": {
+        "rule": "ALL UI text must use i18n",
+        "package": "@n8n/i18n",
+        "never": "Hardcoded strings in templates"
+      },
+      "styling": {
+        "use": "CSS variables",
+        "never": "Hardcoded pixel values for spacing",
+        "reference": "packages/frontend/CLAUDE.md"
+      },
+      "testing": {
+        "data_test_id": {
+          "format": "Single value only",
+          "never": "Spaces or multiple values"
+        }
+      }
+    },
+    "testing": {
+      "location": "Always work from within package directory",
+      "mocking": "Mock all external dependencies",
+      "confirmation": "Confirm test cases with user before writing",
+      "frameworks": {
+        "backend_unit": "Jest",
+        "frontend_unit": "Vitest",
+        "e2e": "Playwright",
+        "http_mocking": "nock"
+      },
+      "pinia_stores": {
+        "check": "Look for unused computed properties when modifying"
+      }
+    },
+    "git": {
+      "pr_template": ".github/pull_request_template.md",
+      "pr_title": ".github/pull_request_title_conventions.md",
+      "draft_pr": "gh pr create --draft",
+      "references": [
+        "Linear ticket: https://linear.app/n8n/issue/[TICKET-ID]",
+        "GitHub issue if mentioned in Linear"
+      ]
+    },
+    "file_structure": {
+      "packages": {
+        "isolated": "Each package has isolated build config",
+        "hot_reload": "Works across full stack in dev mode"
+      },
+      "node_development": "Use dedicated node-dev CLI tool",
+      "workflow_tests": "JSON-based for integration testing",
+      "ai_features": "Dedicated workflow: pnpm dev:ai"
+    }
+  }
+}

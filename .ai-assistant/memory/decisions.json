@@ -1,0 +1,79 @@
+{
+  "decisions": [
+    {
+      "id": "decision_001",
+      "date": "2026-01-11",
+      "title": "AI Assistant System Architecture",
+      "category": "architecture",
+      "description": "Implement local-first RAG system with persistent memory for n8n expertise",
+      "rationale": [
+        "Local execution for zero latency and privacy",
+        "Persistent memory to maintain context between sessions",
+        "RAG for specialized knowledge retrieval",
+        "Auto-learning to improve over time"
+      ],
+      "alternatives_considered": [
+        {
+          "option": "Cloud-based RAG with API",
+          "rejected_because": "Latency, cost, privacy concerns"
+        },
+        {
+          "option": "Simple prompt engineering without memory",
+          "rejected_because": "No context retention, repetitive work"
+        }
+      ],
+      "status": "accepted",
+      "implemented": false
+    },
+    {
+      "id": "decision_002",
+      "date": "2026-01-11",
+      "title": "Use ONNX Runtime for Embeddings",
+      "category": "technology",
+      "description": "Use @xenova/transformers with ONNX models for embeddings",
+      "rationale": [
+        "Keep everything in Node.js/TypeScript ecosystem",
+        "No Python dependency",
+        "Good performance with local models",
+        "Model: all-MiniLM-L6-v2 is lightweight and fast"
+      ],
+      "alternatives_considered": [
+        {
+          "option": "Python sentence-transformers",
+          "rejected_because": "Adds Python dependency, cross-language complexity"
+        },
+        {
+          "option": "OpenAI Embeddings API",
+          "rejected_because": "External dependency, cost, privacy"
+        }
+      ],
+      "status": "accepted",
+      "implemented": false
+    },
+    {
+      "id": "decision_003",
+      "date": "2026-01-11",
+      "title": "SQLite with VSS for Vector Storage",
+      "category": "technology",
+      "description": "Use SQLite with Vector Similarity Search extension",
+      "rationale": [
+        "Single file database, no server required",
+        "Built-in vector similarity search",
+        "Mature and reliable",
+        "Good performance for codebase size"
+      ],
+      "alternatives_considered": [
+        {
+          "option": "JSON with manual cosine similarity",
+          "rejected_because": "Doesn't scale well, slower for large datasets"
+        },
+        {
+          "option": "Separate vector database (Qdrant, Milvus)",
+          "rejected_because": "Overkill for local use, additional complexity"
+        }
+      ],
+      "status": "accepted",
+      "implemented": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# Ignore large binary files
+knowledge-base/embeddings/*.db
+knowledge-base/embeddings/*.bin
+
+# Ignore logs
+logs/*.log
+
+# But keep structure
+!logs/.gitkeep
+!knowledge-base/embeddings/.gitkeep
+
+# Keep example README files
+!knowledge-base/embeddings/README.md
+!knowledge-base/code-examples/README.md

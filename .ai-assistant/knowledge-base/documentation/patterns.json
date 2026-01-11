@@ -1,0 +1,182 @@
+{
+  "development_patterns": {
+    "feature_implementation": {
+      "name": "Full-Stack Feature Implementation",
+      "steps": [
+        {
+          "order": 1,
+          "action": "Define API types",
+          "location": "packages/@n8n/api-types",
+          "description": "Create TypeScript interfaces for API contracts"
+        },
+        {
+          "order": 2,
+          "action": "Implement backend logic",
+          "location": "packages/cli",
+          "description": "Follow backend-module guide, create controller and service"
+        },
+        {
+          "order": 3,
+          "action": "Add API endpoints",
+          "location": "packages/cli",
+          "description": "Register routes in controllers"
+        },
+        {
+          "order": 4,
+          "action": "Update frontend",
+          "location": "packages/editor-ui",
+          "description": "Create components, add i18n translations"
+        },
+        {
+          "order": 5,
+          "action": "Write tests",
+          "locations": ["packages/cli/test", "packages/editor-ui/src/__tests__"],
+          "description": "Unit tests with proper mocks"
+        },
+        {
+          "order": 6,
+          "action": "Typecheck",
+          "command": "pnpm typecheck",
+          "description": "Verify TypeScript types"
+        },
+        {
+          "order": 7,
+          "action": "Lint",
+          "command": "pnpm lint",
+          "description": "Check code quality"
+        }
+      ]
+    },
+    "node_development": {
+      "name": "Creating a New Node",
+      "tool": "node-dev CLI",
+      "location": "packages/nodes-base/nodes",
+      "components": [
+        {
+          "component": "Node class",
+          "file": "NodeName.node.ts",
+          "description": "Main node logic"
+        },
+        {
+          "component": "Credentials",
+          "file": "NodeNameApi.credentials.ts",
+          "description": "Authentication configuration"
+        },
+        {
+          "component": "Icon",
+          "file": "nodename.svg",
+          "description": "Node icon"
+        },
+        {
+          "component": "Description",
+          "location": "node.description property",
+          "description": "Node metadata and parameters"
+        }
+      ],
+      "testing": {
+        "location": "packages/nodes-base/nodes/NodeName/test",
+        "type": "Jest unit tests + JSON workflow tests"
+      }
+    },
+    "backend_module": {
+      "name": "Backend Module Pattern",
+      "guide": "packages/cli/scripts/backend-module/backend-module-guide.md",
+      "structure": [
+        {
+          "component": "Controller",
+          "responsibility": "HTTP request handling",
+          "decorators": ["@RestController", "@Get", "@Post", "@Put", "@Delete"],
+          "dependency_injection": true
+        },
+        {
+          "component": "Service",
+          "responsibility": "Business logic",
+          "decorators": ["@Service"],
+          "dependency_injection": true
+        },
+        {
+          "component": "Repository",
+          "responsibility": "Data access",
+          "orm": "TypeORM",
+          "dependency_injection": true
+        }
+      ],
+      "patterns": {
+        "dependency_injection": "@n8n/di container",
+        "error_handling": "UnexpectedError, OperationalError, UserError",
+        "validation": "Class validator decorators"
+      }
+    },
+    "frontend_component": {
+      "name": "Vue 3 Component Pattern",
+      "location": "packages/editor-ui/src/components",
+      "structure": {
+        "script": {
+          "setup": true,
+          "lang": "ts",
+          "imports": ["Vue 3 Composition API", "Pinia stores", "i18n"]
+        },
+        "template": {
+          "requirements": ["data-test-id attributes", "i18n for all text"]
+        },
+        "style": {
+          "scoped": true,
+          "requirements": ["CSS variables only", "No hardcoded spacing"]
+        }
+      },
+      "best_practices": [
+        "Use composables for shared logic",
+        "Import from @n8n/design-system for UI components",
+        "All text through i18n",
+        "CSS variables for styling"
+      ]
+    },
+    "testing": {
+      "backend_unit": {
+        "framework": "Jest",
+        "location": "packages/cli/test",
+        "patterns": [
+          "Mock external dependencies",
+          "Use jest-mock-extended for type-safe mocks",
+          "Use nock for HTTP mocking"
+        ]
+      },
+      "frontend_unit": {
+        "framework": "Vitest",
+        "location": "packages/editor-ui/src/__tests__",
+        "patterns": [
+          "Mock Pinia stores",
+          "Mock API calls",
+          "Test user interactions"
+        ]
+      },
+      "e2e": {
+        "framework": "Playwright",
+        "location": "packages/testing/playwright",
+        "command": "pnpm --filter=n8n-playwright test:local"
+      }
+    }
+  },
+  "code_organization": {
+    "imports": {
+      "order": [
+        "External libraries",
+        "Internal @n8n packages",
+        "Relative imports",
+        "Type imports (import type)"
+      ]
+    },
+    "naming": {
+      "files": {
+        "components": "PascalCase.vue",
+        "services": "camelCase.service.ts",
+        "controllers": "camelCase.controller.ts",
+        "types": "PascalCase.types.ts"
+      },
+      "variables": "camelCase",
+      "constants": "UPPER_SNAKE_CASE",
+      "types": "PascalCase",
+      "interfaces": "PascalCase (no I prefix)"
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "patterns": [
+    {
+      "id": "pattern_001",
+      "name": "n8n Monorepo Structure",
+      "category": "architecture",
+      "description": "n8n uses pnpm workspaces with Turbo build orchestration",
+      "key_packages": [
+        "@n8n/api-types",
+        "packages/workflow",
+        "packages/core",
+        "packages/cli",
+        "packages/editor-ui",
+        "packages/nodes-base"
+      ],
+      "source": "AGENTS.md",
+      "confidence": "high",
+      "last_updated": "2026-01-11",
+      "usage_count": 0
+    },
+    {
+      "id": "pattern_002",
+      "name": "TypeScript Best Practices",
+      "category": "coding-standards",
+      "rules": [
+        "NEVER use 'any' type - use proper types or 'unknown'",
+        "Avoid type casting with 'as' - use type guards",
+        "Define shared interfaces in @n8n/api-types"
+      ],
+      "source": "AGENTS.md",
+      "confidence": "high",
+      "last_updated": "2026-01-11",
+      "usage_count": 0
+    },
+    {
+      "id": "pattern_003",
+      "name": "Error Handling",
+      "category": "error-handling",
+      "rules": [
+        "Don't use ApplicationError (deprecated)",
+        "Use UnexpectedError, OperationalError or UserError instead"
+      ],
+      "examples": [],
+      "source": "AGENTS.md",
+      "confidence": "high",
+      "last_updated": "2026-01-11",
+      "usage_count": 0
+    },
+    {
+      "id": "pattern_004",
+      "name": "Frontend i18n",
+      "category": "frontend",
+      "rules": [
+        "All UI text must use i18n",
+        "Add translations to @n8n/i18n package",
+        "Use CSS variables directly - never hardcode spacing",
+        "data-test-id must be a single value"
+      ],
+      "source": "AGENTS.md",
+      "confidence": "high",
+      "last_updated": "2026-01-11",
+      "usage_count": 0
+    }
+  ],
+  "gotchas": [
+    {
+      "id": "gotcha_001",
+      "description": "Always build before typecheck when changing api-types, interfaces, or cross-package dependencies",
+      "severity": "high",
+      "category": "build",
+      "solution": "Run pnpm build before pnpm typecheck",
+      "source": "AGENTS.md",
+      "occurrences": 0,
+      "last_encountered": null
+    },
+    {
+      "id": "gotcha_002",
+      "description": "Build output should ALWAYS be redirected to file to avoid overwhelming output",
+      "severity": "medium",
+      "category": "build",
+      "solution": "Use: pnpm build > build.log 2>&1",
+      "source": "AGENTS.md",
+      "occurrences": 0,
+      "last_encountered": null
+    },
+    {
+      "id": "gotcha_003",
+      "description": "When running tests, must be in package directory",
+      "severity": "medium",
+      "category": "testing",
+      "solution": "Use pushd/popd to navigate: pushd packages/cli && pnpm test && popd",
+      "source": "AGENTS.md",
+      "occurrences": 0,
+      "last_encountered": null
+    }
+  ],
+  "conventions": [
+    {
+      "area": "package-manager",
+      "rule": "Always use pnpm, never npm or yarn",
+      "source": "AGENTS.md",
+      "mandatory": true
+    },
+    {
+      "area": "ticket-tracking",
+      "rule": "Use Linear for tickets, reference in PRs and branches",
+      "source": "AGENTS.md",
+      "mandatory": true
+    },
+    {
+      "area": "feature-flags",
+      "rule": "Use Posthog for feature flags",
+      "source": "AGENTS.md",
+      "mandatory": true
+    },
+    {
+      "area": "testing",
+      "rule": "Jest for backend unit tests, Vitest for frontend, Playwright for E2E",
+      "source": "AGENTS.md",
+      "mandatory": true
+    },
+    {
+      "area": "mocking",
+      "rule": "Use nock for server mocking",
+      "source": "AGENTS.md",
+      "mandatory": false
+    }
+  ],
+  "implementation_templates": [
+    {
+      "id": "template_001",
+      "name": "Feature Implementation Flow",
+      "category": "full-stack",
+      "steps": [
+        "1. Define API types in packages/@n8n/api-types",
+        "2. Implement backend logic in packages/cli module",
+        "3. Add API endpoints via controllers",
+        "4. Update frontend in packages/editor-ui with i18n support",
+        "5. Write tests with proper mocks",
+        "6. Run pnpm typecheck to verify types",
+        "7. Run pnpm lint to check code quality"
+      ],
+      "source": "AGENTS.md",
+      "usage_count": 0
+    }
+  ]
+}

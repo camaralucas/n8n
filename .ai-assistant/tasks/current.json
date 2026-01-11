@@ -1,0 +1,47 @@
+{
+  "tasks": [
+    {
+      "id": "task_001",
+      "title": "Phase 1: Foundation Setup",
+      "status": "in_progress",
+      "created_at": "2026-01-11T00:00:00Z",
+      "priority": "high",
+      "subtasks": [
+        {
+          "id": "subtask_001",
+          "description": "Create directory structure",
+          "status": "completed",
+          "completed_at": "2026-01-11T00:00:00Z"
+        },
+        {
+          "id": "subtask_002",
+          "description": "Create initial schemas",
+          "status": "completed",
+          "completed_at": "2026-01-11T00:00:00Z"
+        },
+        {
+          "id": "subtask_003",
+          "description": "Index n8n documentation",
+          "status": "pending"
+        },
+        {
+          "id": "subtask_004",
+          "description": "Add curated code examples",
+          "status": "completed",
+          "completed_at": "2026-01-11T00:30:00Z",
+          "result": "Added 4 examples: 2 nodes, 1 controller, 1 service"
+        },
+        {
+          "id": "subtask_005",
+          "description": "Implement memory manager script",
+          "status": "pending"
+        },
+        {
+          "id": "subtask_006",
+          "description": "Test end-to-end flow",
+          "status": "pending"
+        }
+      ]
+    }
+  ]
+}
